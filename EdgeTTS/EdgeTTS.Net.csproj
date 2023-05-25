@@ -10,7 +10,7 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\EdgeTTS.Framework\EdgeTTS.cs" />
+    <Compile Include="..\EdgeTTS.Framework\EdgeTTSClient.cs" />
     <Compile Include="..\EdgeTTS.Framework\Result.cs" />
     <Compile Include="..\EdgeTTS.Framework\SessionState.cs" />
     <Compile Include="..\EdgeTTS.Framework\SSML.cs" />

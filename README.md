@@ -9,7 +9,7 @@ Fork来自 https://github.com/Loskh/EdgeTTS.Net
 ## 如何使用
 
 ```C#
-EdgeTTS etts = new EdgeTTS();
+var etts = new EdgeTTSClient();
 var result = etts.SynthesisAsync("这是一个测试", "zh-CN-XiaoyiNeural").Result;
 if (ms.Code != ResultCode.Success)
 {

@@ -24,7 +24,7 @@ namespace EdgeTTS.Framework.Test
         {
             InitializeComponent();
         }
-        EdgeTTS et = new EdgeTTS();
+        EdgeTTSClient et = new EdgeTTSClient();
         private void Play_Click(object sender, RoutedEventArgs e)
         {
             var str = tbSayContent.Text;

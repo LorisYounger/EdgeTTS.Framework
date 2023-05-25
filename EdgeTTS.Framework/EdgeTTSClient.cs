@@ -16,7 +16,7 @@ using Serilog;
 using Newtonsoft.Json;
 namespace EdgeTTS
 {
-    public class EdgeTTS : IDisposable
+    public class EdgeTTSClient : IDisposable
     {
 
         public bool KeepConnection;
@@ -33,7 +33,7 @@ namespace EdgeTTS
 
         private const string TRUSTED_CLIENT_TOKEN = "6A5AA1D4EAFF4E9FB37E23D68491D6F4";
 
-        public EdgeTTS(bool keepConnection = true, bool useConnectionKeeper = false, int keepAliveInterval = 1000)
+        public EdgeTTSClient(bool keepConnection = true, bool useConnectionKeeper = false, int keepAliveInterval = 1000)
         {
             this.KeepConnection = keepConnection;
             if (useConnectionKeeper)
@@ -66,12 +66,12 @@ namespace EdgeTTS
                         break;
                 }
             }
+            #if DEBUG
             catch (Exception ex)
             {
-#if DEBUG
                 Debug.WriteLine($"[{DateTime.Now}] Keeper {ex.Message}");
-#endif
             }
+#endif
             finally
             {
                 slimlock.Release();
