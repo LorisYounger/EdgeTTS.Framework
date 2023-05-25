@@ -7,15 +7,13 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
-//using System.Text.Json;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Threading;
-//using System.Text.Json;
 using System.Net.Sockets;
 using System.Diagnostics;
-//using WebSocket4Net;
 using Serilog;
+using System.Text.Json;
 
 namespace EdgeTTS
 {
