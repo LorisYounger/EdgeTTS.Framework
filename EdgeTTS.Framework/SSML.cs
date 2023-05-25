@@ -30,7 +30,7 @@ namespace EdgeTTS
             var message = "X-RequestId:" + RequestID + "\r\nContent-Type:application/ssml+xml\r\n";
             message += "X-Timestamp:" + Utils.GetFormatedDate() + "Z\r\nPath:ssml\r\n\r\n";
             message += "<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>";
-            message += "<voice  name='" + Voice + "'>" + "<prosody pitch='" + Pitch + "' rate ='" + Rate + "' volume='" + Volume + "'>";
+            message += "<voice name='" + Voice + "'>" + "<prosody pitch='" + Pitch + "' rate ='" + Rate + "' volume='" + Volume + "'>";
             //message += $"<mstts:express-as style=\"{style}\" styledegree=\"2\">";
             message += Sentence;
             //message += "</mstts:express-as>";

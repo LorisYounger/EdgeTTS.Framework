@@ -13,8 +13,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Diagnostics;
 using Serilog;
-using System.Text.Json;
-
+using Newtonsoft.Json;
 namespace EdgeTTS
 {
     public class EdgeTTS : IDisposable
@@ -331,7 +330,7 @@ namespace EdgeTTS
                 resString = sr.ReadToEnd();
 
             }
-            var voiceList = JsonSerializer.Deserialize<List<Voice>>(resString);
+            var voiceList = JsonConvert.DeserializeObject<List<Voice>>(resString);
             voiceList.ForEach(x => Debug.WriteLine(x.ShortName));
             //Voices = voiceList;
         }
