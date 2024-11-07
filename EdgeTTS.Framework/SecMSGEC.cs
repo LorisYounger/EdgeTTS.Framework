@@ -43,7 +43,7 @@ namespace EdgeTTS
         /// </summary>
         public string ToConnectionString()
         {
-            return $"&Sec-MS-GEC={Sec_MS_GEC};Sec-MS-GEC-Version={Sec_MS_GEC_Version}";
+            return $"&Sec-MS-GEC={Sec_MS_GEC}&Sec-MS-GEC-Version={Sec_MS_GEC_Version}";
         }
     }
 }
