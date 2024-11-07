@@ -50,6 +50,7 @@
     <Compile Include="EdgeTTSClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
+    <Compile Include="SecMSGEC.cs" />
     <Compile Include="SessionState.cs" />
     <Compile Include="SSML.cs" />
     <Compile Include="Utils.cs" />

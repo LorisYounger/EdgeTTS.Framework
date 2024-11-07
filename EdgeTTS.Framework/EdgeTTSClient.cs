@@ -33,6 +33,38 @@ namespace EdgeTTS
 
         private const string TRUSTED_CLIENT_TOKEN = "6A5AA1D4EAFF4E9FB37E23D68491D6F4";
 
+        /// <summary>
+        /// 可以获得额外加密参数的网址, 一般由热心网友提供
+        /// 例如从 https://github.com/rany2/edge-tts/issues 获取的
+        /// http://123.207.46.66:8086/api/getGec
+        /// https://edge-sec.myaitool.top/?key=edge
+        /// 对于非中国大陆用户, 目前可以不用设置该项
+        /// </summary>
+        public string Sec_MS_GEC_UpDate_Url = "";
+        public SecMSGEC Sec;
+        public string GetSec_MS_GEC()
+        {
+            if (string.IsNullOrWhiteSpace(Sec_MS_GEC_UpDate_Url))
+            {
+                return string.Empty;
+            }
+            if (Sec != null && Sec.Expiration > DateTime.Now)
+            {
+                return Sec.ToConnectionString();
+            }
+            var req = WebRequest.CreateHttp(Sec_MS_GEC_UpDate_Url);
+            req.Method = "GET";
+            var res = req.GetResponse();
+            var resString = string.Empty;
+            using (var steam = new GZipStream(res.GetResponseStream(), CompressionMode.Decompress))
+            {
+                var sr = new StreamReader(steam, Encoding.UTF8);
+                resString = sr.ReadToEnd();
+            }
+            Sec = JsonConvert.DeserializeObject<SecMSGEC>(resString);
+            return Sec.ToConnectionString();
+        }
+
         public EdgeTTSClient(bool keepConnection = true, bool useConnectionKeeper = false, int keepAliveInterval = 1000)
         {
             this.KeepConnection = keepConnection;
@@ -66,7 +98,7 @@ namespace EdgeTTS
                         break;
                 }
             }
-            #if DEBUG
+#if DEBUG
             catch (Exception ex)
             {
                 Debug.WriteLine($"[{DateTime.Now}] Keeper {ex.Message}");
@@ -91,10 +123,10 @@ namespace EdgeTTS
             //毫无卵用的参数
             //options.KeepAliveInterval = TimeSpan.FromSeconds(5);
             var host = "wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1";
-            await webSocket.ConnectAsync(new Uri($"{host}?TrustedClientToken={TRUSTED_CLIENT_TOKEN}&ConnectionId={Utils.GetUUID()}"), token);
+            await webSocket.ConnectAsync(new Uri($"{host}?TrustedClientToken={TRUSTED_CLIENT_TOKEN}&ConnectionId={Utils.GetUUID()}{GetSec_MS_GEC()}"), token);
             //await webSocket.ConnectAsync(new Uri($"ws://speech.est.institute/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken={TRUSTED_CLIENT_TOKEN}&ConnectionId={Helpers.GetUUID()}"), CancellationToken.None);
             //stopwatch.Stop();
-            Log.Debug($"EstablishConnection Time={ stopwatch.Elapsed.TotalMilliseconds}ms");
+            Log.Debug($"EstablishConnection Time={stopwatch.Elapsed.TotalMilliseconds}ms");
             stopwatch.Reset(); ;
         }
 
@@ -150,7 +182,7 @@ namespace EdgeTTS
                     {
                         await Task.Delay(10);
                     }
-                    Log.Debug($"[EdegTTS]接收用时:{ stopwatch.Elapsed.TotalMilliseconds}ms");
+                    Log.Debug($"[EdegTTS]接收用时:{stopwatch.Elapsed.TotalMilliseconds}ms");
                     //stopwatch.Reset(); stopwatch.Start();
                     if (audio.Result.Length == 0)
                         throw new IOException("Received Empty Aduio!");

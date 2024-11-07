@@ -16,5 +16,6 @@
     <Compile Include="..\EdgeTTS.Framework\SSML.cs" />
     <Compile Include="..\EdgeTTS.Framework\Utils.cs" />
     <Compile Include="..\EdgeTTS.Framework\Voice.cs" />
+    <Compile Include="..\EdgeTTS.Framework\SecMSGEC.cs" />
   </ItemGroup>
 </Project>
