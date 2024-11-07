@@ -14,6 +14,8 @@ using System.Net.Sockets;
 using System.Diagnostics;
 using Serilog;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
 namespace EdgeTTS
 {
     public class EdgeTTSClient : IDisposable
@@ -52,16 +54,12 @@ namespace EdgeTTS
             {
                 return Sec.ToConnectionString();
             }
-            var req = WebRequest.CreateHttp(Sec_MS_GEC_UpDate_Url);
-            req.Method = "GET";
-            var res = req.GetResponse();
-            var resString = string.Empty;
-            using (var steam = new GZipStream(res.GetResponseStream(), CompressionMode.Decompress))
+            using (var httpClient = new HttpClient() )
             {
-                var sr = new StreamReader(steam, Encoding.UTF8);
-                resString = sr.ReadToEnd();
+                var response = httpClient.GetAsync(Sec_MS_GEC_UpDate_Url).Result;
+                var resString = response.Content.ReadAsStringAsync().Result;
+                Sec = JsonConvert.DeserializeObject<SecMSGEC>(resString);
             }
-            Sec = JsonConvert.DeserializeObject<SecMSGEC>(resString);
             return Sec.ToConnectionString();
         }
 
