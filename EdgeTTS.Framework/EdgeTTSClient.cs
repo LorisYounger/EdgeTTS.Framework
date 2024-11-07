@@ -15,7 +15,6 @@ using System.Diagnostics;
 using Serilog;
 using Newtonsoft.Json;
 using System.Net.Http;
-using System.Runtime.Remoting.Messaging;
 namespace EdgeTTS
 {
     public class EdgeTTSClient : IDisposable
