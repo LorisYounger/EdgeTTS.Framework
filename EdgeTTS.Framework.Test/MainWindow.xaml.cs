@@ -27,7 +27,7 @@ namespace EdgeTTS.Framework.Test
         EdgeTTSClient et = new EdgeTTSClient();
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-            et.Sec_MS_GEC_UpDate_Url = "http://123.207.46.66:8086/api/getGec";
+            //et.Sec_MS_GEC_UpDate_Url = "http://123.207.46.66:8086/api/getGec";
             var str = tbSayContent.Text;
             var voice = CbSpeaker.Text;
             var rate = srate.Value;//13
